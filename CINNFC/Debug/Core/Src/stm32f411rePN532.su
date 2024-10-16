@@ -1,0 +1,10 @@
+../Core/Src/stm32f411rePN532.c:19:5:PN532_Reset	4	static
+../Core/Src/stm32f411rePN532.c:29:6:PN532_Log	16	static
+../Core/Src/stm32f411rePN532.c:33:6:PN532_Init	16	static
+../Core/Src/stm32f411rePN532.c:39:6:i2c_read	24	static
+../Core/Src/stm32f411rePN532.c:43:6:i2c_write	24	static
+../Core/Src/stm32f411rePN532.c:47:5:PN532_I2C_ReadData	56	dynamic
+../Core/Src/stm32f411rePN532.c:61:5:PN532_I2C_WriteData	16	static
+../Core/Src/stm32f411rePN532.c:66:6:PN532_I2C_WaitReady	24	static
+../Core/Src/stm32f411rePN532.c:80:5:PN532_I2C_Wakeup	4	static
+../Core/Src/stm32f411rePN532.c:91:6:PN532_I2C_Init	16	static
