@@ -1,0 +1,12 @@
+../Core/Inc/mbedtls/error.h:142:19:mbedtls_error_add	24	static
+../Core/Src/mbedtls/x509_csr.c:43:12:x509_csr_get_version	32	static
+../Core/Src/mbedtls/x509_csr.c:64:12:x509_csr_parse_extensions	80	static
+../Core/Src/mbedtls/x509_csr.c:199:12:x509_csr_parse_attributes	64	static
+../Core/Src/mbedtls/x509_csr.c:265:12:mbedtls_x509_csr_parse_der_internal	72	static
+../Core/Src/mbedtls/x509_csr.c:434:5:mbedtls_x509_csr_parse_der	32	static
+../Core/Src/mbedtls/x509_csr.c:443:5:mbedtls_x509_csr_parse_der_with_ext_cb	32	static
+../Core/Src/mbedtls/x509_csr.c:454:5:mbedtls_x509_csr_parse	64	static
+../Core/Src/mbedtls/x509_csr.c:504:5:mbedtls_x509_csr_parse_file	32	static
+../Core/Src/mbedtls/x509_csr.c:528:5:mbedtls_x509_csr_info	72	static
+../Core/Src/mbedtls/x509_csr.c:609:6:mbedtls_x509_csr_init	16	static
+../Core/Src/mbedtls/x509_csr.c:617:6:mbedtls_x509_csr_free	16	static

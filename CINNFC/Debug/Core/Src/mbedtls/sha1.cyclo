@@ -1,0 +1,9 @@
+../Core/Src/mbedtls/sha1.c:27:6:mbedtls_sha1_init	1
+../Core/Src/mbedtls/sha1.c:32:6:mbedtls_sha1_free	2
+../Core/Src/mbedtls/sha1.c:41:6:mbedtls_sha1_clone	1
+../Core/Src/mbedtls/sha1.c:50:5:mbedtls_sha1_starts	1
+../Core/Src/mbedtls/sha1.c:65:5:mbedtls_internal_sha1_process	1
+../Core/Src/mbedtls/sha1.c:238:5:mbedtls_sha1_update	9
+../Core/Src/mbedtls/sha1.c:291:5:mbedtls_sha1_finish	4
+../Core/Src/mbedtls/sha1.c:354:5:mbedtls_sha1	3
+../Core/Src/mbedtls/sha1.c:409:5:mbedtls_sha1_self_test	13

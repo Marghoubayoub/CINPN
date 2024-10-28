@@ -1,0 +1,2 @@
+../Core/Src/mbedtls/platform.c:386:5:mbedtls_platform_setup	16	static
+../Core/Src/mbedtls/platform.c:396:6:mbedtls_platform_teardown	16	static

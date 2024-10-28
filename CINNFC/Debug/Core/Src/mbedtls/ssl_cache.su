@@ -1,0 +1,10 @@
+../Core/Src/mbedtls/ssl_cache.c:24:6:mbedtls_ssl_cache_init	16	static
+../Core/Src/mbedtls/ssl_cache.c:37:12:ssl_cache_find_entry	40	static
+../Core/Src/mbedtls/ssl_cache.c:74:5:mbedtls_ssl_cache_get	40	static
+../Core/Src/mbedtls/ssl_cache.c:114:13:ssl_cache_entry_zeroize	16	static
+../Core/Src/mbedtls/ssl_cache.c:130:12:ssl_cache_pick_writing_slot	56	static
+../Core/Src/mbedtls/ssl_cache.c:246:5:mbedtls_ssl_cache_set	48	static
+../Core/Src/mbedtls/ssl_cache.c:321:5:mbedtls_ssl_cache_remove	40	static
+../Core/Src/mbedtls/ssl_cache.c:371:6:mbedtls_ssl_cache_set_timeout	16	static
+../Core/Src/mbedtls/ssl_cache.c:381:6:mbedtls_ssl_cache_set_max_entries	16	static
+../Core/Src/mbedtls/ssl_cache.c:390:6:mbedtls_ssl_cache_free	24	static

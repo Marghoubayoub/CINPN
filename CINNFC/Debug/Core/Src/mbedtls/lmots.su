@@ -1,0 +1,12 @@
+../Core/Src/mbedtls/lmots.c:38:12:local_err_translation	16	static
+../Core/Src/mbedtls/lmots.c:83:23:lmots_checksum_calculate	24	static
+../Core/Src/mbedtls/lmots.c:119:12:create_digit_array_with_checksum	288	static
+../Core/Src/mbedtls/lmots.c:208:12:hash_digit_array	336	static
+../Core/Src/mbedtls/lmots.c:313:12:public_key_from_hashed_digit_array	272	static
+../Core/Src/mbedtls/lmots.c:364:5:mbedtls_lms_error_from_psa	16	static
+../Core/Src/mbedtls/lmots.c:383:6:mbedtls_lmots_public_init	16	static
+../Core/Src/mbedtls/lmots.c:388:6:mbedtls_lmots_public_free	16	static
+../Core/Src/mbedtls/lmots.c:397:5:mbedtls_lmots_import_public_key	32	static
+../Core/Src/mbedtls/lmots.c:428:5:mbedtls_lmots_export_public_key	32	static
+../Core/Src/mbedtls/lmots.c:460:5:mbedtls_lmots_calculate_public_key_candidate	1168	static
+../Core/Src/mbedtls/lmots.c:510:5:mbedtls_lmots_verify	88	static

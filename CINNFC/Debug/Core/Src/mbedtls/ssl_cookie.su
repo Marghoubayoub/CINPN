@@ -1,0 +1,8 @@
+../Core/Inc/ssl_misc.h:503:19:mbedtls_ssl_chk_buf_ptr	24	static
+../Core/Src/mbedtls/ssl_cookie.c:61:6:mbedtls_ssl_cookie_init	16	static
+../Core/Src/mbedtls/ssl_cookie.c:80:6:mbedtls_ssl_cookie_set_timeout	16	static
+../Core/Src/mbedtls/ssl_cookie.c:85:6:mbedtls_ssl_cookie_free	16	static
+../Core/Src/mbedtls/ssl_cookie.c:104:5:mbedtls_ssl_cookie_setup	72	static
+../Core/Src/mbedtls/ssl_cookie.c:163:12:ssl_cookie_hmac	56	static
+../Core/Src/mbedtls/ssl_cookie.c:189:5:mbedtls_ssl_cookie_write	56	static
+../Core/Src/mbedtls/ssl_cookie.c:278:5:mbedtls_ssl_cookie_check	88	static

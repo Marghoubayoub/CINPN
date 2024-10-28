@@ -1,0 +1,12 @@
+../Core/Src/mbedtls/psa_crypto_storage.c:40:26:psa_its_identifier_of_slot	1
+../Core/Src/mbedtls/psa_crypto_storage.c:76:21:psa_crypto_storage_load	3
+../Core/Src/mbedtls/psa_crypto_storage.c:97:5:psa_is_key_present_in_storage	2
+../Core/Src/mbedtls/psa_crypto_storage.c:128:21:psa_crypto_storage_store	6
+../Core/Src/mbedtls/psa_crypto_storage.c:166:14:psa_destroy_persistent_key	4
+../Core/Src/mbedtls/psa_crypto_storage.c:201:21:psa_crypto_storage_get_data_length	2
+../Core/Src/mbedtls/psa_crypto_storage.c:236:6:psa_format_key_data_for_storage	1
+../Core/Src/mbedtls/psa_crypto_storage.c:257:21:check_magic_header	2
+../Core/Src/mbedtls/psa_crypto_storage.c:266:14:psa_parse_key_data_from_storage	8
+../Core/Src/mbedtls/psa_crypto_storage.c:317:14:psa_save_persistent_key	5
+../Core/Src/mbedtls/psa_crypto_storage.c:350:6:psa_free_persistent_key_data	1
+../Core/Src/mbedtls/psa_crypto_storage.c:355:14:psa_load_persistent_key	7

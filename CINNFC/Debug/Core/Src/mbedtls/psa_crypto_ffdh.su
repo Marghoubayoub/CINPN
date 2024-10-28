@@ -1,0 +1,6 @@
+../Core/Inc/psa/crypto_struct.h:425:30:psa_get_key_type	16	static
+../Core/Src/mbedtls/psa_crypto_ffdh.c:30:21:mbedtls_psa_ffdh_set_prime_generator	48	static
+../Core/Src/mbedtls/psa_crypto_ffdh.c:143:14:mbedtls_psa_ffdh_export_public_key	88	static
+../Core/Src/mbedtls/psa_crypto_ffdh.c:201:14:mbedtls_psa_ffdh_generate_key	56	static
+../Core/Src/mbedtls/psa_crypto_ffdh.c:237:14:mbedtls_psa_ffdh_import_key	24	static
+../Core/Src/mbedtls/psa_crypto_ffdh.c:257:14:mbedtls_psa_ffdh_key_agreement	96	static

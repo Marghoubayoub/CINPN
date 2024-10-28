@@ -1,0 +1,32 @@
+/*
+ * entropy_hardware.c
+ *
+ *  Created on: Oct 22, 2024
+ *      Author: MARGHOUB Ayoub
+ */
+
+#include "mbedtls/entropy.h"
+#include "stm32f4xx_hal.h"
+#include <string.h>
+
+// Référence au périphérique RNG initialisé dans CubeMX
+extern RNG_HandleTypeDef hrng;
+
+int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen) {
+    uint32_t random_value;
+    *olen = 0;
+
+    for (size_t i = 0; i < len / sizeof(uint32_t); i++) {
+        // Attendre que les données RNG soient prêtes
+        while (!__HAL_RNG_GET_FLAG(&hrng, RNG_FLAG_DRDY)) { }
+
+        // Lire une valeur aléatoire de 32 bits
+        random_value = HAL_RNG_GetRandomNumber(&hrng);
+
+        // Copier la valeur aléatoire dans le buffer de sortie
+        memcpy(output + (i * sizeof(uint32_t)), &random_value, sizeof(uint32_t));
+        *olen += sizeof(uint32_t);
+    }
+
+    return 0;
+}

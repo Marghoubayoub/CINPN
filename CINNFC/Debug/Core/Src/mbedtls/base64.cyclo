@@ -1,0 +1,7 @@
+../Core/Inc/constant_time_impl.h:100:33:mbedtls_ct_compiler_opaque	1
+../Core/Inc/constant_time_impl.h:406:29:mbedtls_ct_uchar_in_range_if	1
+../Core/Src/mbedtls/base64.c:26:15:mbedtls_ct_base64_enc_char	1
+../Core/Src/mbedtls/base64.c:41:13:mbedtls_ct_base64_dec_value	1
+../Core/Src/mbedtls/base64.c:61:5:mbedtls_base64_encode	9
+../Core/Src/mbedtls/base64.c:128:5:mbedtls_base64_decode	26
+../Core/Src/mbedtls/base64.c:254:5:mbedtls_base64_self_test	10

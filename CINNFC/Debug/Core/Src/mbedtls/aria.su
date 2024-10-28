@@ -1,0 +1,15 @@
+../Core/Src/mbedtls/aria.c:42:24:aria_p1	24	static,ignoring_inline_asm
+../Core/Src/mbedtls/aria.c:109:20:aria_a	40	static
+../Core/Src/mbedtls/aria.c:141:20:aria_sl	24	static
+../Core/Src/mbedtls/aria.c:274:13:aria_fo_xor	64	static
+../Core/Src/mbedtls/aria.c:296:13:aria_fe_xor	64	static
+../Core/Src/mbedtls/aria.c:322:13:aria_rot128	40	static
+../Core/Src/mbedtls/aria.c:347:5:mbedtls_aria_setkey_enc	216	static
+../Core/Src/mbedtls/aria.c:409:5:mbedtls_aria_setkey_dec	56	static
+../Core/Src/mbedtls/aria.c:441:5:mbedtls_aria_crypt_ecb	136	static
+../Core/Src/mbedtls/aria.c:493:6:mbedtls_aria_init	16	static
+../Core/Src/mbedtls/aria.c:499:6:mbedtls_aria_free	16	static
+../Core/Src/mbedtls/aria.c:512:5:mbedtls_aria_crypt_cbc	144	static
+../Core/Src/mbedtls/aria.c:563:5:mbedtls_aria_crypt_cfb128	32	static
+../Core/Src/mbedtls/aria.c:620:5:mbedtls_aria_crypt_ctr	40	static
+../Core/Src/mbedtls/aria.c:811:5:mbedtls_aria_self_test	408	static

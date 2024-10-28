@@ -1,0 +1,13 @@
+../Core/Inc/mbedtls/cipher.h:538:22:mbedtls_cipher_info_get_block_size	16	static
+../Core/Inc/constant_time_impl.h:220:33:mbedtls_ct_if	24	static,ignoring_inline_asm
+../Core/Inc/constant_time_impl.h:286:38:mbedtls_ct_uint_lt	24	static,ignoring_inline_asm
+../Core/Inc/constant_time_impl.h:487:19:mbedtls_ct_error_if	24	static
+../Core/Inc/constant_time_impl.h:510:38:mbedtls_ct_uint_gt	16	static
+../Core/Src/mbedtls/nist_kw.c:46:6:mbedtls_nist_kw_init	16	static
+../Core/Src/mbedtls/nist_kw.c:51:5:mbedtls_nist_kw_setkey	32	static
+../Core/Src/mbedtls/nist_kw.c:103:6:mbedtls_nist_kw_free	16	static
+../Core/Src/mbedtls/nist_kw.c:117:13:calc_a_xor_t	40	static
+../Core/Src/mbedtls/nist_kw.c:129:5:mbedtls_nist_kw_wrap	128	static
+../Core/Src/mbedtls/nist_kw.c:260:12:unwrap	112	static
+../Core/Src/mbedtls/nist_kw.c:323:5:mbedtls_nist_kw_unwrap	96	static
+../Core/Src/mbedtls/nist_kw.c:584:5:mbedtls_nist_kw_self_test	160	static

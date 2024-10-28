@@ -1,0 +1,10 @@
+../Core/Src/mbedtls/psa_util.c:125:5:psa_generic_status_to_mbedtls	16	static
+../Core/Src/mbedtls/psa_util.c:143:5:psa_status_to_mbedtls	32	static
+../Core/Src/mbedtls/psa_util.c:157:5:psa_pk_status_to_mbedtls	16	static
+../Core/Src/mbedtls/psa_util.c:189:18:mbedtls_ecc_group_to_psa	16	static
+../Core/Src/mbedtls/psa_util.c:262:22:mbedtls_ecc_group_from_psa	16	static
+../Core/Src/mbedtls/psa_util.c:348:5:mbedtls_psa_get_random	32	static
+../Core/Src/mbedtls/psa_util.c:390:12:convert_raw_to_der_single_int	40	static
+../Core/Src/mbedtls/psa_util.c:433:5:mbedtls_ecdsa_raw_to_der	176	static
+../Core/Src/mbedtls/psa_util.c:507:12:convert_der_to_raw_single_int	40	static
+../Core/Src/mbedtls/psa_util.c:553:5:mbedtls_ecdsa_der_to_raw	176	static

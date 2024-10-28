@@ -1,0 +1,11 @@
+../Core/Inc/mbedtls/md.h:246:29:mbedtls_md_get_size_from_type	1
+../Core/Inc/mbedtls/cipher.h:477:22:mbedtls_cipher_info_get_key_bitlen	2
+../Core/Inc/mbedtls/cipher.h:518:22:mbedtls_cipher_info_get_iv_size	2
+../Core/Inc/mbedtls/error.h:142:19:mbedtls_error_add	1
+../Core/Src/mbedtls/pkcs12.c:36:12:pkcs12_parse_pbe_params	5
+../Core/Src/mbedtls/pkcs12.c:76:12:pkcs12_pbe_derive_key_iv	8
+../Core/Src/mbedtls/pkcs12.c:132:5:mbedtls_pkcs12_pbe	1
+../Core/Src/mbedtls/pkcs12.c:150:5:mbedtls_pkcs12_pbe_ext	14
+../Core/Src/mbedtls/pkcs12.c:245:13:pkcs12_fill_buffer	4
+../Core/Src/mbedtls/pkcs12.c:268:12:calculate_hashes	12
+../Core/Src/mbedtls/pkcs12.c:326:5:mbedtls_pkcs12_derivation	24

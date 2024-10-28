@@ -1,0 +1,6 @@
+../Core/Inc/psa/crypto_struct.h:377:34:psa_get_key_lifetime	1
+../Core/Inc/psa/crypto_struct.h:425:30:psa_get_key_type	1
+../Core/Inc/psa/crypto_struct.h:441:22:psa_get_key_bits	1
+../Core/Src/mbedtls/psa_crypto_driver_wrappers_no_static.c:86:14:psa_driver_wrapper_get_key_buffer_size	1
+../Core/Src/mbedtls/psa_crypto_driver_wrappers_no_static.c:122:14:psa_driver_wrapper_export_public_key	2
+../Core/Src/mbedtls/psa_crypto_driver_wrappers_no_static.c:222:14:psa_driver_wrapper_get_builtin_key	1

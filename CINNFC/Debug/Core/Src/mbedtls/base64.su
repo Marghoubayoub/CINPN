@@ -1,0 +1,7 @@
+../Core/Inc/constant_time_impl.h:100:33:mbedtls_ct_compiler_opaque	16	static,ignoring_inline_asm
+../Core/Inc/constant_time_impl.h:406:29:mbedtls_ct_uchar_in_range_if	40	static
+../Core/Src/mbedtls/base64.c:26:15:mbedtls_ct_base64_enc_char	24	static
+../Core/Src/mbedtls/base64.c:41:13:mbedtls_ct_base64_dec_value	24	static
+../Core/Src/mbedtls/base64.c:61:5:mbedtls_base64_encode	56	static
+../Core/Src/mbedtls/base64.c:128:5:mbedtls_base64_decode	56	static
+../Core/Src/mbedtls/base64.c:254:5:mbedtls_base64_self_test	160	static

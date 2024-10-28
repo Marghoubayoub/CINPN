@@ -1,0 +1,6 @@
+../Core/Src/mbedtls/ssl_debug_helpers_generated.c:21:13:mbedtls_ssl_named_group_to_str	16	static
+../Core/Src/mbedtls/ssl_debug_helpers_generated.c:65:13:mbedtls_ssl_sig_alg_to_str	16	static
+../Core/Src/mbedtls/ssl_debug_helpers_generated.c:107:13:mbedtls_ssl_states_str	16	static
+../Core/Src/mbedtls/ssl_debug_helpers_generated.c:191:13:mbedtls_ssl_protocol_version_str	16	static
+../Core/Src/mbedtls/ssl_debug_helpers_generated.c:205:13:mbedtls_tls_prf_types_str	16	static
+../Core/Src/mbedtls/ssl_debug_helpers_generated.c:223:13:mbedtls_ssl_key_export_type_str	16	static

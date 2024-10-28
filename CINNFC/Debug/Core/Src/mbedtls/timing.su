@@ -1,0 +1,4 @@
+../Core/Src/mbedtls/timing.c:86:15:mbedtls_timing_get_timer	48	static
+../Core/Src/mbedtls/timing.c:108:6:mbedtls_timing_set_delay	32	static
+../Core/Src/mbedtls/timing.c:123:5:mbedtls_timing_get_delay	24	static
+../Core/Src/mbedtls/timing.c:148:10:mbedtls_timing_get_final_delay	16	static

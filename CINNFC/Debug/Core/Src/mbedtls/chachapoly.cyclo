@@ -1,0 +1,13 @@
+../Core/Src/mbedtls/chachapoly.c:34:12:chachapoly_pad_aad	2
+../Core/Src/mbedtls/chachapoly.c:55:12:chachapoly_pad_ciphertext	2
+../Core/Src/mbedtls/chachapoly.c:70:6:mbedtls_chachapoly_init	1
+../Core/Src/mbedtls/chachapoly.c:80:6:mbedtls_chachapoly_free	2
+../Core/Src/mbedtls/chachapoly.c:94:5:mbedtls_chachapoly_setkey	1
+../Core/Src/mbedtls/chachapoly.c:104:5:mbedtls_chachapoly_starts	4
+../Core/Src/mbedtls/chachapoly.c:143:5:mbedtls_chachapoly_update_aad	2
+../Core/Src/mbedtls/chachapoly.c:156:5:mbedtls_chachapoly_update	10
+../Core/Src/mbedtls/chachapoly.c:204:5:mbedtls_chachapoly_finish	7
+../Core/Src/mbedtls/chachapoly.c:244:12:chachapoly_crypt_and_tag	4
+../Core/Src/mbedtls/chachapoly.c:277:5:mbedtls_chachapoly_encrypt_and_tag	1
+../Core/Src/mbedtls/chachapoly.c:291:5:mbedtls_chachapoly_auth_decrypt	3
+../Core/Src/mbedtls/chachapoly.c:427:5:mbedtls_chachapoly_self_test	13

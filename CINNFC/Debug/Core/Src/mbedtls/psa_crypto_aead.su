@@ -1,0 +1,13 @@
+../Core/Inc/psa/crypto_struct.h:425:30:psa_get_key_type	16	static
+../Core/Src/mbedtls/psa_crypto_aead.c:26:21:psa_aead_setup	48	static
+../Core/Src/mbedtls/psa_crypto_aead.c:117:14:mbedtls_psa_aead_encrypt	480	static
+../Core/Src/mbedtls/psa_crypto_aead.c:211:21:psa_aead_unpadded_locate_tag	32	static
+../Core/Src/mbedtls/psa_crypto_aead.c:229:14:mbedtls_psa_aead_decrypt	480	static
+../Core/Src/mbedtls/psa_crypto_aead.c:321:14:mbedtls_psa_aead_encrypt_setup	40	static
+../Core/Src/mbedtls/psa_crypto_aead.c:342:14:mbedtls_psa_aead_decrypt_setup	40	static
+../Core/Src/mbedtls/psa_crypto_aead.c:362:14:mbedtls_psa_aead_set_nonce	32	static
+../Core/Src/mbedtls/psa_crypto_aead.c:420:14:mbedtls_psa_aead_set_lengths	24	static
+../Core/Src/mbedtls/psa_crypto_aead.c:444:14:mbedtls_psa_aead_update_ad	32	static
+../Core/Src/mbedtls/psa_crypto_aead.c:484:14:mbedtls_psa_aead_update	40	static
+../Core/Src/mbedtls/psa_crypto_aead.c:549:14:mbedtls_psa_aead_finish	40	static
+../Core/Src/mbedtls/psa_crypto_aead.c:623:14:mbedtls_psa_aead_abort	16	static

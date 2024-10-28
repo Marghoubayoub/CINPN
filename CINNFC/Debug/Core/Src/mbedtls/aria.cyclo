@@ -1,0 +1,15 @@
+../Core/Src/mbedtls/aria.c:42:24:aria_p1	1
+../Core/Src/mbedtls/aria.c:109:20:aria_a	1
+../Core/Src/mbedtls/aria.c:141:20:aria_sl	1
+../Core/Src/mbedtls/aria.c:274:13:aria_fo_xor	1
+../Core/Src/mbedtls/aria.c:296:13:aria_fe_xor	1
+../Core/Src/mbedtls/aria.c:322:13:aria_rot128	3
+../Core/Src/mbedtls/aria.c:347:5:mbedtls_aria_setkey_enc	9
+../Core/Src/mbedtls/aria.c:409:5:mbedtls_aria_setkey_dec	5
+../Core/Src/mbedtls/aria.c:441:5:mbedtls_aria_crypt_ecb	2
+../Core/Src/mbedtls/aria.c:493:6:mbedtls_aria_init	1
+../Core/Src/mbedtls/aria.c:499:6:mbedtls_aria_free	2
+../Core/Src/mbedtls/aria.c:512:5:mbedtls_aria_crypt_cbc	11
+../Core/Src/mbedtls/aria.c:563:5:mbedtls_aria_crypt_cfb128	9
+../Core/Src/mbedtls/aria.c:620:5:mbedtls_aria_crypt_ctr	6
+../Core/Src/mbedtls/aria.c:811:5:mbedtls_aria_self_test	41

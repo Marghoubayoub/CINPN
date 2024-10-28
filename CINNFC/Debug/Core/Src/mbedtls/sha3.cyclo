@@ -1,0 +1,11 @@
+../Core/Src/mbedtls/sha3.c:101:13:keccak_f1600	5
+../Core/Src/mbedtls/sha3.c:247:6:mbedtls_sha3_init	1
+../Core/Src/mbedtls/sha3.c:252:6:mbedtls_sha3_free	2
+../Core/Src/mbedtls/sha3.c:261:6:mbedtls_sha3_clone	1
+../Core/Src/mbedtls/sha3.c:270:5:mbedtls_sha3_starts	5
+../Core/Src/mbedtls/sha3.c:302:5:mbedtls_sha3_update	9
+../Core/Src/mbedtls/sha3.c:342:5:mbedtls_sha3_finish	5
+../Core/Src/mbedtls/sha3.c:379:5:mbedtls_sha3	3
+../Core/Src/mbedtls/sha3.c:536:12:mbedtls_sha3_kat_test	10
+../Core/Src/mbedtls/sha3.c:588:12:mbedtls_sha3_long_kat_test	16
+../Core/Src/mbedtls/sha3.c:665:5:mbedtls_sha3_self_test	11

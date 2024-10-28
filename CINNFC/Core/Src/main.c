@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+PN532 pn532;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,7 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-PN532 pn532;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,15 +96,14 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
+	const char* CIN_num = "OPI5GORE<";
+	const char* birth_date = "000920";     // Format YYMMDD
+	const char* expiry_date = "310913";    // Format YYMMDD
   /* USER CODE END 2 */
-  const char* CIN_num = "BM38477";
-  const char* birth_date = "000920";     // Format YYMMDD
-  const char* expiry_date = "310913";    // Format YYMMDD
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  printf("Start \r\n");
-  PN532 pn532;
+  printf("Start \n");
 
   PN532_I2C_Init(&pn532);
   PN532_GetFirmwareVersion(&pn532, buff);
@@ -112,7 +111,7 @@ int main(void)
      printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
   }
   else {
-     return -1;
+     while(1);
   }
   PN532_SamConfiguration(&pn532);
   printf("Waiting for RFID/NFC card...\r\n");
@@ -123,7 +122,7 @@ int main(void)
 	if (uid_len == PN532_STATUS_ERROR) {
 	  	printf("Don't found card \n");
 	} else {
-		indx++;
+		indx = 1;
 	    printf("Found card with UID: ");
 	    for (uint8_t i = 0; i < uid_len; i++) {
 	  	    printf("%02x ", uid[i]);
@@ -131,16 +130,17 @@ int main(void)
 	  	printf("\r\n");
 	  	   //break;
 	}
-	if(indx > 0){
-	printf("read data ... \n");
-	// Tentative de lecture de la carte
-	if (read_identity_card(&pn532, CIN_num, birth_date, expiry_date) == 1) {
-	    printf("Lecture réussie !\n");
-	} else {
-	    printf("Échec de la lecture\n");
-	}
+	if(indx == 1){
+		printf("read data ... \n");
+		// Tentative de lecture de la carte
+		if (read_identity_card(&pn532, CIN_num, birth_date, expiry_date) == 1) {
+			printf("lecture reussie !\n");
+		} else {
+			printf("echec de lecture\n");
+		}
 
-	HAL_Delay(1000); // Attente avant nouvelle tentative
+		HAL_Delay(1000);
+		indx = 0;
 	}
     /* USER CODE BEGIN 3 */
   }

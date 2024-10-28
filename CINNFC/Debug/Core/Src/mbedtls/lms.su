@@ -1,0 +1,9 @@
+../Core/Inc/psa/crypto_struct.h:89:43:psa_hash_operation_init	248	static
+../Core/Src/mbedtls/lms.c:39:12:local_err_translation	16	static
+../Core/Src/mbedtls/lms.c:94:12:create_merkle_leaf_value	520	static
+../Core/Src/mbedtls/lms.c:167:12:create_merkle_internal_value	520	static
+../Core/Src/mbedtls/lms.c:225:6:mbedtls_lms_public_init	16	static
+../Core/Src/mbedtls/lms.c:230:6:mbedtls_lms_public_free	16	static
+../Core/Src/mbedtls/lms.c:239:5:mbedtls_lms_import_public_key	48	static
+../Core/Src/mbedtls/lms.c:273:5:mbedtls_lms_export_public_key	40	static
+../Core/Src/mbedtls/lms.c:301:5:mbedtls_lms_verify	200	static

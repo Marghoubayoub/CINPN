@@ -1,0 +1,12 @@
+../Core/Src/mbedtls/x509write_csr.c:39:6:mbedtls_x509write_csr_init	1
+../Core/Src/mbedtls/x509write_csr.c:44:6:mbedtls_x509write_csr_free	2
+../Core/Src/mbedtls/x509write_csr.c:56:6:mbedtls_x509write_csr_set_md_alg	1
+../Core/Src/mbedtls/x509write_csr.c:61:6:mbedtls_x509write_csr_set_key	1
+../Core/Src/mbedtls/x509write_csr.c:66:5:mbedtls_x509write_csr_set_subject_name	1
+../Core/Src/mbedtls/x509write_csr.c:72:5:mbedtls_x509write_csr_set_extension	1
+../Core/Src/mbedtls/x509write_csr.c:81:5:mbedtls_x509write_csr_set_subject_alternative_name	1
+../Core/Src/mbedtls/x509write_csr.c:87:5:mbedtls_x509write_csr_set_key_usage	4
+../Core/Src/mbedtls/x509write_csr.c:110:5:mbedtls_x509write_csr_set_ns_cert_type	4
+../Core/Src/mbedtls/x509write_csr.c:134:12:x509write_csr_der_internal	25
+../Core/Src/mbedtls/x509write_csr.c:288:5:mbedtls_x509write_csr_der	2
+../Core/Src/mbedtls/x509write_csr.c:313:5:mbedtls_x509write_csr_pem	3

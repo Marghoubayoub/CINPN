@@ -1,0 +1,6 @@
+../Core/Src/mbedtls/psa_its_file.c:62:13:psa_its_fill_filename	40	static
+../Core/Src/mbedtls/psa_its_file.c:74:21:psa_its_read_file	88	static
+../Core/Src/mbedtls/psa_its_file.c:107:14:psa_its_get_info	32	static
+../Core/Src/mbedtls/psa_its_file.c:119:14:psa_its_get	48	static
+../Core/Src/mbedtls/psa_its_file.c:175:14:psa_its_set	104	static
+../Core/Src/mbedtls/psa_its_file.c:238:14:psa_its_remove	48	static

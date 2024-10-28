@@ -1,0 +1,3 @@
+../Core/Src/mbedtls/hkdf.c:16:5:mbedtls_hkdf	2
+../Core/Src/mbedtls/hkdf.c:36:5:mbedtls_hkdf_extract	4
+../Core/Src/mbedtls/hkdf.c:63:5:mbedtls_hkdf_expand	15

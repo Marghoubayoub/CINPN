@@ -1,0 +1,12 @@
+../Core/Src/mbedtls/sha256.c:225:6:mbedtls_sha256_init	1
+../Core/Src/mbedtls/sha256.c:230:6:mbedtls_sha256_free	2
+../Core/Src/mbedtls/sha256.c:239:6:mbedtls_sha256_clone	1
+../Core/Src/mbedtls/sha256.c:248:5:mbedtls_sha256_starts	4
+../Core/Src/mbedtls/sha256.c:492:5:mbedtls_internal_sha256_process	6
+../Core/Src/mbedtls/sha256.c:582:15:mbedtls_internal_sha256_process_many	3
+../Core/Src/mbedtls/sha256.c:645:5:mbedtls_sha256_update	9
+../Core/Src/mbedtls/sha256.c:700:5:mbedtls_sha256_finish	5
+../Core/Src/mbedtls/sha256.c:773:5:mbedtls_sha256	5
+../Core/Src/mbedtls/sha256.c:878:12:mbedtls_sha256_common_self_test	16
+../Core/Src/mbedtls/sha256.c:965:5:mbedtls_sha256_self_test	1
+../Core/Src/mbedtls/sha256.c:972:5:mbedtls_sha224_self_test	1

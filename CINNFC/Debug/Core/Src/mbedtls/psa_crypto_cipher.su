@@ -1,0 +1,16 @@
+../Core/Inc/common.h:138:30:mbedtls_buffer_offset	16	static
+../Core/Inc/common.h:155:36:mbedtls_buffer_offset_const	16	static
+../Core/Inc/mbedtls/cipher.h:538:22:mbedtls_cipher_info_get_block_size	16	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:29:21:mbedtls_cipher_validate_values	16	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:126:14:mbedtls_cipher_values_from_psa	32	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:258:30:mbedtls_cipher_info_from_psa	40	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:282:21:psa_cipher_setup	64	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:360:14:mbedtls_psa_cipher_encrypt_setup	32	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:371:14:mbedtls_psa_cipher_decrypt_setup	32	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:382:14:mbedtls_psa_cipher_set_iv	24	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:419:21:psa_cipher_update_ecb	48	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:499:14:mbedtls_psa_cipher_update	40	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:552:14:mbedtls_psa_cipher_finish	48	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:590:14:mbedtls_psa_cipher_abort	16	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:604:14:mbedtls_psa_cipher_encrypt	120	static
+../Core/Src/mbedtls/psa_crypto_cipher.c:662:14:mbedtls_psa_cipher_decrypt	120	static

@@ -3,14 +3,13 @@
 #define PN532_H
 
 #include "main.h"
-#include "config.h"
-#include "check_config.h"
-#include "des.h"
-#include "platform.h"
-#include "platform_time.h"
-#include "platform_util.h"
-#include "sha1.h"
-#include "threading.h"
+#include "mbedtls/des.h"
+#include "mbedtls/aes.h"
+#include "psa/crypto.h"
+#include "mbedtls/sha1.h"
+#include "mbedtls/cipher.h"
+#include "mbedtls/cmac.h"
+
 
 #include <stdint.h>
 #include <stdbool.h>

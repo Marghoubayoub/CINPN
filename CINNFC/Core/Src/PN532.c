@@ -29,10 +29,15 @@
 
 #include "PN532.h"
 #include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal_conf.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
+//extern I2C_HandleTypeDef hi2c1;
+#define PN532_I2C_ADDRESS               0x48
+#define HAL_MAX_DELAY                   10
 
 const uint8_t PN532_ACK[] = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00};
 const uint8_t PN532_FRAME_START[] = {0x00, 0x00, 0xFF};
@@ -220,8 +225,8 @@ int PN532_SamConfiguration(PN532* pn532) {
     // - 0x01, use IRQ pin
     // Note that no other verification is necessary as call_function will
     // check the command was executed as expected.
-    //uint8_t params[] = {0x01, 0x14, 0x01};
-    uint8_t params[] = {0x4A, 0x01, 0x00};
+    uint8_t params[] = {0x01, 0x14, 0x01};
+    //uint8_t params[] = {0x4A, 0x01, 0x00};
     PN532_CallFunction(pn532, PN532_COMMAND_SAMCONFIGURATION,
                        NULL, 0, params, sizeof(params), PN532_DEFAULT_TIMEOUT);
     return PN532_STATUS_OK;
@@ -504,7 +509,7 @@ int PN532_WriteGpioP(PN532* pn532, uint8_t pin_number, bool pin_state) {
 /****************************CIN-PN532****************************************/
 /****************************CIN-PN532****************************************/
 
-// Définition des constantes
+
 #define MAX_FRAME_SIZE 256
 #define KEY_SIZE 16
 #define NONCE_SIZE 8
@@ -516,14 +521,12 @@ typedef struct {
     uint8_t Ksmac[16];  // Clé de session pour le MAC
 } BACKeys;
 
-// Variables globales
 static uint8_t mrz_key[KEY_SIZE];
 static BACKeys session_keys;
-static I2C_HandleTypeDef hi2c1;
 
 // Fonctions utilitaires pour le protocole BAC
 static void calculate_sha1(const uint8_t* data, size_t length, uint8_t* hash) {
-    // Implémentation de SHA-1 (utiliser une bibliothèque crypto comme mbedtls)
+    // Implémentation de SHA-1
     mbedtls_sha1_context ctx;
     mbedtls_sha1_init(&ctx);
     mbedtls_sha1_starts(&ctx);
@@ -533,7 +536,7 @@ static void calculate_sha1(const uint8_t* data, size_t length, uint8_t* hash) {
 }
 
 static void calculate_3des(uint8_t* input, uint8_t* output, uint8_t* key, int mode) {
-    // Implémentation du 3DES (utiliser une bibliothèque crypto comme mbedtls)
+    // Implémentation du 3DES
     mbedtls_des3_context ctx;
     mbedtls_des3_init(&ctx);
 
@@ -553,10 +556,9 @@ static void calculate_mrz_key(const char* CIN_num, const char* birth_date, const
     uint8_t mrz_info[MRZ_SIZE];
     uint8_t hash[20];
 
-    // Concaténer les informations MRZ
-    memcpy(mrz_info, CIN_num, 7);
-    memcpy(mrz_info + 7, birth_date, 6);
-    memcpy(mrz_info + 13, expiry_date, 6);
+    memcpy(mrz_info, CIN_num, 10);
+	memcpy(mrz_info + 9, birth_date, 6);
+	memcpy(mrz_info + 15, expiry_date, 6);
 
     // Calculer le SHA-1
     calculate_sha1(mrz_info, MRZ_SIZE, hash);
@@ -590,41 +592,36 @@ static void derive_session_keys(uint8_t* k_seed) {
     memcpy(session_keys.Ksmac, hash, 16);
 }
 
-// Fonction principale pour l'authentification BAC
+
 int perform_bac(PN532* pn532) {
     uint8_t rnd_icc[8], rnd_ifd[8], k_ifd[16];
     uint8_t encrypted_challenge[32];
-    uint8_t response[MAX_FRAME_SIZE];
+    uint8_t response[8];
     uint8_t cmd_data[40];
 
-    // 1. Génération du challenge aléatoire
     for(int i = 0; i < 8; i++) {
         rnd_ifd[i] = rand() % 256;
     }
 
-    // 2. Envoi de GET CHALLENGE
-    uint8_t get_challenge[] = {0x00, 0x84, 0x00, 0x00, 0x08};
-    if (PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), get_challenge, sizeof(get_challenge), PN532_DEFAULT_TIMEOUT) <= 0) {
+
+    uint8_t get_challenge[] = {0x00, 0x84, 0x00, 0x00, 0x08}; //0x84 | PN532_COMMAND_INDATAEXCHANGE
+    if (PN532_CallFunction(pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), get_challenge, sizeof(get_challenge), PN532_DEFAULT_TIMEOUT) <= 0) {
         return 0;
     }
     memcpy(rnd_icc, response, 8);
 
-    // 3. Construction de la commande EXTERNAL AUTHENTICATE
     memcpy(cmd_data, rnd_ifd, 8);
     memcpy(cmd_data + 8, rnd_icc, 8);
     memcpy(cmd_data + 16, k_ifd, 16);
 
-    // 4. Chiffrement du challenge
     calculate_3des(cmd_data, encrypted_challenge, mrz_key, MBEDTLS_DES_ENCRYPT);
 
-    // 5. Envoi de la commande d'authentification
     uint8_t auth_cmd[40] = {0x00, 0x82, 0x00, 0x00, 0x28};
     memcpy(auth_cmd + 5, encrypted_challenge, 32);
-    if (PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), auth_cmd, sizeof(auth_cmd), PN532_DEFAULT_TIMEOUT) <= 0) {
+    if (PN532_CallFunction(pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), auth_cmd, sizeof(auth_cmd), PN532_DEFAULT_TIMEOUT) <= 0) {
         return 0;
     }
 
-    // 6. Dérivation des clés de session
     uint8_t k_seed[32];
     memcpy(k_seed, rnd_ifd, 8);
     memcpy(k_seed + 8, rnd_icc, 8);
@@ -634,61 +631,100 @@ int perform_bac(PN532* pn532) {
     return 1;
 }
 
-// Fonction pour lire les données après authentification BAC
+
 int CIN_data(PN532* pn532, uint8_t* data_buffer, size_t* data_length) {
     uint8_t cmd[5] = {0x00, 0xB0, 0x00, 0x00, 0x00};  // READ BINARY
-    uint8_t response[MAX_FRAME_SIZE];
+    uint8_t response[128];
     int resp_len;
 
-    // Protection des commandes avec Secure Messaging
     uint8_t protected_cmd[MAX_FRAME_SIZE];
     size_t protected_len;
 
-    // Application du Secure Messaging
-    /*if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
-        return 0;
-    }*/
-
-    // Envoi de la commande protégée
-    resp_len = PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), protected_cmd, protected_len, PN532_DEFAULT_TIMEOUT);
-    if (resp_len <= 0) {
+    if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
         return 0;
     }
 
-    // Déchiffrement de la réponse
-    /*if (!decrypt_secure_messaging(response, resp_len, data_buffer, data_length)) {
+    resp_len = PN532_CallFunction(pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), protected_cmd, protected_len, PN532_DEFAULT_TIMEOUT);
+    if (resp_len <= 0) {
         return 0;
-    }*/
+    }
+    // resp_len / 128
+    if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
+        return 0;
+    }
 
     return 1;
 }
 
-// Fonction principale pour initialiser et utiliser le système
+
 int read_identity_card(PN532* pn532, const char* CIN_num, const char* birth_date, const char* expiry_date) {
     uint8_t data_buffer[MAX_FRAME_SIZE];
     size_t data_length;
 
-    // 1. Calcul de la clé MRZ
     calculate_mrz_key(CIN_num, birth_date, expiry_date);
 
-    // 2. Authentification BAC
-    if (!perform_bac(&pn532)) {
-        printf("Échec de l'authentification BAC\n");
+    if (!perform_bac(pn532)) {
+        printf("Echec de l'authentification BAC\n");
         return 0;
     }
 
-    // 3. Lecture des données
-    if (!CIN_data(&pn532, data_buffer, &data_length)) {
-        printf("Échec de la lecture des données\n");
+    if (!CIN_data(pn532, data_buffer, &data_length)) {
+        printf("Echec de la lecture des donnees\n");
         return 0;
     }
 
-    // 4. Traitement des données lues
-    printf("Données lues avec succès (%d octets)\n", data_length);
+    printf("Donnees lues avec succes (%d octets)\n", data_length);
     for (size_t i = 0; i < data_length; i++) {
         printf("%02X ", data_buffer[i]);
     }
     printf("\n");
+    printf("Donnes character \n");
+	for (size_t i = 0; i < data_length; i++) {
+		printf("%c ", data_buffer[i]);
+	}
 
     return 1;
 }
+
+// Fonction pour appliquer la messagerie sécurisée
+int apply_secure_messaging(uint8_t* cmd, size_t cmd_len, uint8_t* protected_cmd, size_t* protected_len) {
+    uint8_t mac[16];
+    uint8_t padded_cmd[MAX_FRAME_SIZE];
+    size_t padded_len = ((cmd_len + 7) / 8) * 8; // Padding to multiple of 8 bytes
+
+    memcpy(padded_cmd, cmd, cmd_len);
+    memset(padded_cmd + cmd_len, 0x00, padded_len - cmd_len);
+
+    mbedtls_cipher_context_t ctx;
+    mbedtls_cipher_init(&ctx);
+    mbedtls_cipher_setup(&ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_CBC)); //  MBEDTLS_CIPHER_AES_128_CMAC
+    mbedtls_cipher_cmac_starts(&ctx, session_keys.Ksmac, 128);
+    mbedtls_cipher_cmac_update(&ctx, padded_cmd, padded_len);
+    mbedtls_cipher_cmac_finish(&ctx, mac);
+    mbedtls_cipher_free(&ctx);
+
+    memcpy(protected_cmd, cmd, cmd_len);
+    memcpy(protected_cmd + cmd_len, mac, 16);
+    *protected_len = cmd_len + 16;
+    return 1;
+}
+
+
+int decrypt_secure_messaging(uint8_t* encrypted_data, size_t encrypted_len, uint8_t* decrypted_data, size_t* decrypted_len) {
+    uint8_t iv[16] = {0}; // Initialisation du vecteur
+    mbedtls_aes_context aes_ctx;
+
+    mbedtls_aes_init(&aes_ctx);
+    mbedtls_aes_setkey_dec(&aes_ctx, session_keys.Ksenc, 128);
+
+    if (mbedtls_aes_crypt_cbc(&aes_ctx, MBEDTLS_AES_DECRYPT, encrypted_len, iv, encrypted_data, decrypted_data) != 0) {
+    	mbedtls_aes_free(&aes_ctx);
+        return 0;
+    }
+
+    mbedtls_aes_free(&aes_ctx);
+    *decrypted_len = encrypted_len;
+
+    return 1;
+}
+

@@ -1,67 +1,261 @@
-16:06:04 **** Incremental Build of configuration Debug for project CINNFC ****
+09:58:06 **** Incremental Build of configuration Debug for project CINNFC ****
 make -j4 all 
-arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
-../Core/Src/PN532.c: In function 'perform_bac':
-../Core/Src/PN532.c:607:28: warning: passing argument 1 of 'PN532_CallFunction' from incompatible pointer type [-Wincompatible-pointer-types]
-  607 |     if (PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), get_challenge, sizeof(get_challenge), PN532_DEFAULT_TIMEOUT) <= 0) {
-      |                            ^~~~~~
-      |                            |
-      |                            PN532 ** {aka struct _PN532 **}
-../Core/Src/PN532.c:148:12: note: expected 'PN532 *' {aka 'struct _PN532 *'} but argument is of type 'PN532 **' {aka 'struct _PN532 **'}
-  148 |     PN532* pn532,
-      |     ~~~~~~~^~~~~
-../Core/Src/PN532.c:623:28: warning: passing argument 1 of 'PN532_CallFunction' from incompatible pointer type [-Wincompatible-pointer-types]
-  623 |     if (PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), auth_cmd, sizeof(auth_cmd), PN532_DEFAULT_TIMEOUT) <= 0) {
-      |                            ^~~~~~
-      |                            |
-      |                            PN532 ** {aka struct _PN532 **}
-../Core/Src/PN532.c:148:12: note: expected 'PN532 *' {aka 'struct _PN532 *'} but argument is of type 'PN532 **' {aka 'struct _PN532 **'}
-  148 |     PN532* pn532,
-      |     ~~~~~~~^~~~~
+arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
+../Core/Src/PN532.c:39: warning: "PN532_I2C_ADDRESS" redefined
+   39 | #define PN532_I2C_ADDRESS               0x48
+      | 
+In file included from ../Core/Src/PN532.c:30:
+../Core/Inc/PN532.h:68: note: this is the location of the previous definition
+   68 | #define PN532_I2C_ADDRESS                   (0x48 >> 1)
+      | 
+../Core/Src/PN532.c:40: warning: "HAL_MAX_DELAY" redefined
+   40 | #define HAL_MAX_DELAY                   10
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/PN532.h:5,
+                 from ../Core/Src/PN532.c:30:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:61: note: this is the location of the previous definition
+   61 | #define HAL_MAX_DELAY      0xFFFFFFFFU
+      | 
 ../Core/Src/PN532.c: In function 'CIN_data':
-../Core/Src/PN532.c:653:35: warning: passing argument 1 of 'PN532_CallFunction' from incompatible pointer type [-Wincompatible-pointer-types]
-  653 |     resp_len = PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), protected_cmd, protected_len, PN532_DEFAULT_TIMEOUT);
-      |                                   ^~~~~~
-      |                                   |
-      |                                   PN532 ** {aka struct _PN532 **}
-../Core/Src/PN532.c:148:12: note: expected 'PN532 *' {aka 'struct _PN532 *'} but argument is of type 'PN532 **' {aka 'struct _PN532 **'}
-  148 |     PN532* pn532,
-      |     ~~~~~~~^~~~~
-../Core/Src/PN532.c:639:13: warning: unused variable 'cmd' [-Wunused-variable]
-  639 |     uint8_t cmd[5] = {0x00, 0xB0, 0x00, 0x00, 0x00};  // READ BINARY
-      |             ^~~
-../Core/Src/PN532.c: In function 'read_identity_card':
-../Core/Src/PN532.c:675:22: warning: passing argument 1 of 'perform_bac' from incompatible pointer type [-Wincompatible-pointer-types]
-  675 |     if (!perform_bac(&pn532)) {
-      |                      ^~~~~~
-      |                      |
-      |                      PN532 ** {aka struct _PN532 **}
-../Core/Src/PN532.c:594:24: note: expected 'PN532 *' {aka 'struct _PN532 *'} but argument is of type 'PN532 **' {aka 'struct _PN532 **'}
-  594 | int perform_bac(PN532* pn532) {
-      |                 ~~~~~~~^~~~~
-../Core/Src/PN532.c:681:19: warning: passing argument 1 of 'CIN_data' from incompatible pointer type [-Wincompatible-pointer-types]
-  681 |     if (!CIN_data(&pn532, data_buffer, &data_length)) {
-      |                   ^~~~~~
-      |                   |
-      |                   PN532 ** {aka struct _PN532 **}
-../Core/Src/PN532.c:638:21: note: expected 'PN532 *' {aka 'struct _PN532 *'} but argument is of type 'PN532 **' {aka 'struct _PN532 **'}
-  638 | int CIN_data(PN532* pn532, uint8_t* data_buffer, size_t* data_length) {
-      |              ~~~~~~~^~~~~
-At top level:
-../Core/Src/PN532.c:522:26: warning: 'hi2c1' defined but not used [-Wunused-variable]
-  522 | static I2C_HandleTypeDef hi2c1;
-      |                          ^~~~~
-../Core/Src/PN532.c: In function 'CIN_data':
-../Core/Src/PN532.c:653:16: warning: 'protected_len' is used uninitialized [-Wuninitialized]
-  653 |     resp_len = PN532_CallFunction(&pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), protected_cmd, protected_len, PN532_DEFAULT_TIMEOUT);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/PN532.c:643:10: warning: implicit declaration of function 'apply_secure_messaging' [-Wimplicit-function-declaration]
+  643 |     if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/PN532.c:652:10: warning: implicit declaration of function 'decrypt_secure_messaging' [-Wimplicit-function-declaration]
+  652 |     if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
 Finished building target: CINNFC.elf
  
 arm-none-eabi-size  CINNFC.elf 
 arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
    text	   data	    bss	    dec	    hex	filename
-  34188	    116	   2108	  36412	   8e3c	CINNFC.elf
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+Finished building: CINNFC.list
+ 
+
+09:58:10 Build Finished. 0 errors, 5 warnings. (took 3s.807ms)
+
+09:58:12 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-size  CINNFC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+10:06:42 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-size  CINNFC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+11:45:44 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/PN532.c:39: warning: "PN532_I2C_ADDRESS" redefined
+   39 | #define PN532_I2C_ADDRESS               0x48
+      | 
+In file included from ../Core/Src/PN532.c:30:
+../Core/Inc/PN532.h:68: note: this is the location of the previous definition
+   68 | #define PN532_I2C_ADDRESS                   (0x48 >> 1)
+      | 
+../Core/Src/PN532.c:40: warning: "HAL_MAX_DELAY" redefined
+   40 | #define HAL_MAX_DELAY                   10
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/PN532.h:5,
+                 from ../Core/Src/PN532.c:30:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:61: note: this is the location of the previous definition
+   61 | #define HAL_MAX_DELAY      0xFFFFFFFFU
+      | 
+../Core/Src/PN532.c: In function 'CIN_data':
+../Core/Src/PN532.c:643:10: warning: implicit declaration of function 'apply_secure_messaging' [-Wimplicit-function-declaration]
+  643 |     if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/PN532.c:652:10: warning: implicit declaration of function 'decrypt_secure_messaging' [-Wimplicit-function-declaration]
+  652 |     if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:136:21: warning: implicit declaration of function 'read_identity_card' [-Wimplicit-function-declaration]
+  136 |                 if (read_identity_card(&pn532, CIN_num, birth_date, expiry_date) == 1) {
+      |                     ^~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
+Finished building target: CINNFC.elf
+ 
+arm-none-eabi-size  CINNFC.elf 
+arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+Finished building: CINNFC.list
+ 
+15:40:18 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/PN532.c:39: warning: "PN532_I2C_ADDRESS" redefined
+   39 | #define PN532_I2C_ADDRESS               0x48
+      | 
+In file included from ../Core/Src/PN532.c:30:
+../Core/Inc/PN532.h:68: note: this is the location of the previous definition
+   68 | #define PN532_I2C_ADDRESS                   (0x48 >> 1)
+      | 
+../Core/Src/PN532.c:40: warning: "HAL_MAX_DELAY" redefined
+   40 | #define HAL_MAX_DELAY                   10
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/PN532.h:5,
+                 from ../Core/Src/PN532.c:30:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:61: note: this is the location of the previous definition
+   61 | #define HAL_MAX_DELAY      0xFFFFFFFFU
+      | 
+../Core/Src/PN532.c: In function 'CIN_data':
+../Core/Src/PN532.c:643:10: warning: implicit declaration of function 'apply_secure_messaging' [-Wimplicit-function-declaration]
+  643 |     if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/PN532.c:652:10: warning: implicit declaration of function 'decrypt_secure_messaging' [-Wimplicit-function-declaration]
+  652 |     if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:136:21: warning: implicit declaration of function 'read_identity_card' [-Wimplicit-function-declaration]
+  136 |                 if (read_identity_card(&pn532, CIN_num, birth_date, expiry_date) == 1) {
+      |                     ^~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
+Finished building target: CINNFC.elf
+ 
+arm-none-eabi-size  CINNFC.elf 
+arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+Finished building: CINNFC.list
+ 
+15:57:19 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/PN532.c:39: warning: "PN532_I2C_ADDRESS" redefined
+   39 | #define PN532_I2C_ADDRESS               0x48
+      | 
+In file included from ../Core/Src/PN532.c:30:
+../Core/Inc/PN532.h:68: note: this is the location of the previous definition
+   68 | #define PN532_I2C_ADDRESS                   (0x48 >> 1)
+      | 
+../Core/Src/PN532.c:40: warning: "HAL_MAX_DELAY" redefined
+   40 | #define HAL_MAX_DELAY                   10
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/PN532.h:5,
+                 from ../Core/Src/PN532.c:30:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:61: note: this is the location of the previous definition
+   61 | #define HAL_MAX_DELAY      0xFFFFFFFFU
+      | 
+../Core/Src/PN532.c: In function 'CIN_data':
+../Core/Src/PN532.c:643:10: warning: implicit declaration of function 'apply_secure_messaging' [-Wimplicit-function-declaration]
+  643 |     if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/PN532.c:652:10: warning: implicit declaration of function 'decrypt_secure_messaging' [-Wimplicit-function-declaration]
+  652 |     if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:136:21: warning: implicit declaration of function 'read_identity_card' [-Wimplicit-function-declaration]
+  136 |                 if (read_identity_card(&pn532, CIN_num, birth_date, expiry_date) == 1) {
+      |                     ^~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
+Finished building target: CINNFC.elf
+ 
+arm-none-eabi-size  CINNFC.elf 
+arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+Finished building: CINNFC.list
+ 
+15:59:24 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:136:21: warning: implicit declaration of function 'read_identity_card' [-Wimplicit-function-declaration]
+  136 |                 if (read_identity_card(&pn532, CIN_num, birth_date, expiry_date) == 1) {
+      |                     ^~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
+Finished building target: CINNFC.elf
+ 
+arm-none-eabi-size  CINNFC.elf 
+arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
+Finished building: default.size.stdout
+ 
+Finished building: CINNFC.list
+ 
+16:00:05 **** Incremental Build of configuration Debug for project CINNFC ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
+../Core/Src/PN532.c:39: warning: "PN532_I2C_ADDRESS" redefined
+   39 | #define PN532_I2C_ADDRESS               0x48
+      | 
+In file included from ../Core/Src/PN532.c:30:
+../Core/Inc/PN532.h:68: note: this is the location of the previous definition
+   68 | #define PN532_I2C_ADDRESS                   (0x48 >> 1)
+      | 
+../Core/Src/PN532.c:40: warning: "HAL_MAX_DELAY" redefined
+   40 | #define HAL_MAX_DELAY                   10
+      | 
+In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/PN532.h:5,
+                 from ../Core/Src/PN532.c:30:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:61: note: this is the location of the previous definition
+   61 | #define HAL_MAX_DELAY      0xFFFFFFFFU
+      | 
+../Core/Src/PN532.c: In function 'CIN_data':
+../Core/Src/PN532.c:643:10: warning: implicit declaration of function 'apply_secure_messaging' [-Wimplicit-function-declaration]
+  643 |     if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/PN532.c:652:10: warning: implicit declaration of function 'decrypt_secure_messaging' [-Wimplicit-function-declaration]
+  652 |     if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
+Finished building target: CINNFC.elf
+ 
+arm-none-eabi-size  CINNFC.elf 
+arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
+   text	   data	    bss	    dec	    hex	filename
+  80332	    180	  10884	  91396	  16504	CINNFC.elf
 Finished building: default.size.stdout
  
 Finished building: CINNFC.list
