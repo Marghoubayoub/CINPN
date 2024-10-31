@@ -519,6 +519,8 @@ int PN532_WriteGpioP(PN532* pn532, uint8_t pin_number, bool pin_state) {
 typedef struct {
     uint8_t Ksenc[16];  // Clé de session pour le chiffrement
     uint8_t Ksmac[16];  // Clé de session pour le MAC
+    uint8_t Kenc[16];
+    uint8_t Kmac[16];
 } BACKeys;
 
 static uint8_t mrz_key[KEY_SIZE];
@@ -535,20 +537,22 @@ static void calculate_sha1(const uint8_t* data, size_t length, uint8_t* hash) {
     mbedtls_sha1_free(&ctx);
 }
 
-static void calculate_3des(uint8_t* input, uint8_t* output, uint8_t* key, int mode) {
-    // Implémentation du 3DES
+static void calculate_3des(const unsigned char *key, const unsigned char *input, size_t input_len, unsigned char *output) {
+
     mbedtls_des3_context ctx;
-    mbedtls_des3_init(&ctx);
+	unsigned char iv[8] = {0}; // Initialization vector of zeros
 
-    if (mode == MBEDTLS_DES_ENCRYPT) {
-        mbedtls_des3_set3key_enc(&ctx, key);
-        mbedtls_des3_crypt_ecb(&ctx, input, output);
-    } else {
-        mbedtls_des3_set3key_dec(&ctx, key);
-        mbedtls_des3_crypt_ecb(&ctx, input, output);
-    }
+	// Initialize the 3DES context
+	mbedtls_des3_init(&ctx);
 
-    mbedtls_des3_free(&ctx);
+	// Set the encryption key
+	mbedtls_des3_set2key_enc(&ctx, key);
+
+	// Perform 3DES encryption in CBC mode
+	int ret = mbedtls_des3_crypt_cbc(&ctx, MBEDTLS_DES_ENCRYPT, input_len, iv, input, output);
+
+	// Free the context
+	mbedtls_des3_free(&ctx);
 }
 
 // Fonction pour calculer la clé MRZ
@@ -557,14 +561,94 @@ static void calculate_mrz_key(const char* CIN_num, const char* birth_date, const
     uint8_t hash[20];
 
     memcpy(mrz_info, CIN_num, 10);
-	memcpy(mrz_info + 9, birth_date, 6);
-	memcpy(mrz_info + 15, expiry_date, 6);
+	memcpy(mrz_info + 10, birth_date, 7);
+	memcpy(mrz_info + 17, expiry_date, 7);
 
     // Calculer le SHA-1
     calculate_sha1(mrz_info, MRZ_SIZE, hash);
 
     // Prendre les 16 premiers octets pour la clé
     memcpy(mrz_key, hash, KEY_SIZE);
+    calculate_Kenc_Kmac();
+}
+
+static int calculate_KIC(uint8_t* KIC){
+	mbedtls_entropy_context entropy;
+	mbedtls_ctr_drbg_context ctr_drbg;
+	const char *pers = "random_kic_generation";
+
+	// Initialisation des contextes
+	mbedtls_entropy_init(&entropy);
+	mbedtls_ctr_drbg_init(&ctr_drbg);
+
+	// Initialiser le générateur de nombres aléatoires avec une source d'entropie
+	if (mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, (const unsigned char *) pers, strlen(pers)) != 0) {
+		printf("Erreur d'initialisation du generateur de nombres aleatoires\n");
+		return 0;
+	}
+
+	// Générer les 16 octets aléatoires pour KIC
+	if (mbedtls_ctr_drbg_random(&ctr_drbg, KIC, sizeof(KIC)) != 0) {
+		printf("Erreur de generation de KIC\n");
+		return 0;
+	}
+
+	// Libération des contextes
+	mbedtls_ctr_drbg_free(&ctr_drbg);
+	mbedtls_entropy_free(&entropy);
+	return 1;
+}
+void adjustParity(uint8_t* key, size_t length) {
+    for(size_t i = 0; i < length; i++) {
+        uint8_t byte = key[i] & 0xFE;  // Clear the parity bit (LSB)
+        uint8_t count = 0;
+
+        // Count number of 1s in bits 1-7
+        for(int j = 1; j < 8; j++) {
+            if(byte & (1 << j)) {
+                count++;
+            }
+        }
+
+        // Set parity bit (LSB) to make total number of 1s odd
+        key[i] = byte | (count % 2 == 0 ? 1 : 0);
+    }
+}
+
+void calculate_Kenc_Kmac(void){
+	uint8_t hash1[20];
+	uint8_t Enc_D[20] = {0};
+	uint8_t Mac_D[20] = {0};
+	uint8_t Ka[8];
+	uint8_t Kb[8];
+	//kenc
+	memcpy(Enc_D, mrz_key, 16);
+	Enc_D[16] = 0x00;
+	Enc_D[17] = 0x00;
+	Enc_D[18] = 0x00;
+	Enc_D[19] = 0x01;
+	calculate_sha1(Enc_D, 20, hash1);
+	memcpy(Ka, hash1, 8);
+	adjustParity(Ka, 8);
+	memcpy(session_keys.Kenc, Ka, 8);
+	memcpy(Kb, hash1 + 8, 8);
+	adjustParity(Kb, 8);
+	memcpy(session_keys.Kenc + 8, Kb, 8);
+
+	//kmac
+	memcpy(Mac_D, mrz_key, 16);
+	Mac_D[16] = 0x00;
+	Mac_D[17] = 0x00;
+	Mac_D[18] = 0x00;
+	Mac_D[19] = 0x02;
+	calculate_sha1(Mac_D, 20, hash1);
+	memcpy(Ka, hash1, 8);
+	adjustParity(Ka, 8);
+	memcpy(session_keys.Kmac, Ka, 8);
+	memcpy(Kb, hash1 + 8, 8);
+	adjustParity(Kb, 8);
+	memcpy(session_keys.Kmac + 8, Kb, 8);
+
 }
 
 // Fonction pour dériver les clés de session
@@ -574,32 +658,49 @@ static void derive_session_keys(uint8_t* k_seed) {
     uint8_t mac_data[20] = {0};
 
     // Dérivation pour Ksenc
-    enc_data[0] = 0x00;
-    enc_data[1] = 0x00;
-    enc_data[2] = 0x00;
-    enc_data[3] = 0x01;
-    memcpy(enc_data + 4, k_seed, 16);
-    calculate_sha1(enc_data, 20, hash);
-    memcpy(session_keys.Ksenc, hash, 16);
+	memcpy(enc_data, k_seed, 16);
+	enc_data[16] = 0x00;
+	enc_data[17] = 0x00;
+	enc_data[18] = 0x00;
+	enc_data[19] = 0x01;
+	calculate_sha1(enc_data, 20, hash);
+	memcpy(session_keys.Ksenc, hash, 16);
 
-    // Dérivation pour Ksmac
-    mac_data[0] = 0x00;
-    mac_data[1] = 0x00;
-    mac_data[2] = 0x00;
-    mac_data[3] = 0x02;
-    memcpy(mac_data + 4, k_seed, 16);
-    calculate_sha1(mac_data, 20, hash);
-    memcpy(session_keys.Ksmac, hash, 16);
+	// Dérivation pour Ksmac
+	memcpy(mac_data, k_seed, 16);
+	mac_data[16] = 0x00;
+	mac_data[17] = 0x00;
+	mac_data[18] = 0x00;
+	mac_data[19] = 0x02;
+	calculate_sha1(mac_data, 20, hash);
+	memcpy(session_keys.Ksmac, hash, 16);
+
+}
+
+void calculate_SSC(uint8_t rnd_icc[8], uint8_t SSC[8]){
+	// Copier RND.IC dans SSC
+	for (int i = 0; i < 8; i++) {
+		SSC[i] = rnd_icc[i];
+	}
+
+	// Incrémenter SSC de 1
+	for (int i = 7; i >= 0; i--) {
+		if (++SSC[i] != 0) break;  // arrêt si pas de dépassement
+	}
 }
 
 
 int perform_bac(PN532* pn532) {
-    uint8_t rnd_icc[8], rnd_ifd[8], k_ifd[16];
-    uint8_t encrypted_challenge[32];
-    uint8_t response[8];
+    //uint8_t rnd_icc[8], rnd_ifd[8], k_ifd[16];
+    uint8_t EIFD[32];
     uint8_t cmd_data[40];
+    uint8_t resp_data[40];
+    uint8_t response[128];
+    uint8_t S[32];
+	uint8_t MIFD[8];
+	uint8_t KIC[16];
 
-    for(int i = 0; i < 8; i++) {
+    /*for(int i = 0; i < 8; i++) {
         rnd_ifd[i] = rand() % 256;
     }
 
@@ -608,25 +709,61 @@ int perform_bac(PN532* pn532) {
     if (PN532_CallFunction(pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), get_challenge, sizeof(get_challenge), PN532_DEFAULT_TIMEOUT) <= 0) {
         return 0;
     }
-    memcpy(rnd_icc, response, 8);
+    memcpy(rnd_icc, response, 8);*/
 
-    memcpy(cmd_data, rnd_ifd, 8);
-    memcpy(cmd_data + 8, rnd_icc, 8);
-    memcpy(cmd_data + 16, k_ifd, 16);
+    uint8_t rnd_ifd[8] = {0x78, 0x17, 0x23, 0x86, 0x0C, 0x06, 0xC2, 0x26};
+    uint8_t rnd_icc[8] = {0x46, 0x08, 0xF9, 0x19, 0x88, 0x70, 0x22, 0x12};
+    uint8_t k_ifd[16] = {0x0B, 0x79, 0x52, 0x40, 0xCB, 0x70, 0x49, 0xB0, 0x1C, 0x19, 0xB3, 0x3E, 0x32, 0x80, 0x4F, 0x0B};
+    memcpy(S, rnd_ifd, 8);
+    memcpy(S + 8, rnd_icc, 8);
+    memcpy(S + 16, k_ifd, 16);
 
-    calculate_3des(cmd_data, encrypted_challenge, mrz_key, MBEDTLS_DES_ENCRYPT);
+    calculate_3des(session_keys.Kenc, S, 32, EIFD);
+    compute_retail_mac(session_keys.Kmac, EIFD, 32, MIFD);
 
-    uint8_t auth_cmd[40] = {0x00, 0x82, 0x00, 0x00, 0x28};
-    memcpy(auth_cmd + 5, encrypted_challenge, 32);
+    memcpy(cmd_data, EIFD, 32);
+    memcpy(cmd_data + 32, MIFD, 8);
+
+    // Envoi de la commande d'authentification
+    uint8_t auth_cmd[46] = {0x00, 0x82, 0x00, 0x00, 0x28};
+    memcpy(auth_cmd + 5, cmd_data, 40);
+    auth_cmd[45] = 0x28;
     if (PN532_CallFunction(pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), auth_cmd, sizeof(auth_cmd), PN532_DEFAULT_TIMEOUT) <= 0) {
         return 0;
     }
 
-    uint8_t k_seed[32];
-    memcpy(k_seed, rnd_ifd, 8);
-    memcpy(k_seed + 8, rnd_icc, 8);
-    memcpy(k_seed + 16, k_ifd, 16);
+    if(calculate_KIC(KIC) == 1){
+    	printf(" KIC is genereted \n");
+    }
+
+    uint8_t k_seed[16];
+    for (int i = 0; i < 16; i++) {
+    	k_seed[i] = k_ifd[i] ^ KIC[i];
+    }
+
     derive_session_keys(k_seed);
+
+    uint8_t SSC[8];
+    calculate_SSC(rnd_icc, SSC);
+
+    uint8_t R[32];
+    memcpy(R, rnd_icc, 8);
+    memcpy(R + 8, rnd_ifd, 8);
+    memcpy(R + 16, KIC, 16);
+
+    uint8_t EIC[32];
+    calculate_3des(R, EIC, session_keys.Kenc, MBEDTLS_DES_ENCRYPT);
+
+    uint8_t MIC[8];
+    //calculate_cbc_mac(EIC, sizeof(EIC), session_keys.Kmac, MIC);
+
+    memcpy(resp_data, EIC, 32);
+    memcpy(resp_data + 32, MIC, 8);
+    memcpy(auth_cmd + 5, resp_data, 40);
+	auth_cmd[45] = 0x28;
+	if (PN532_CallFunction(pn532, PN532_COMMAND_INDATAEXCHANGE, response, sizeof(response), auth_cmd, sizeof(auth_cmd), PN532_DEFAULT_TIMEOUT) <= 0) {
+		return 0;
+	}
 
     return 1;
 }
@@ -728,3 +865,48 @@ int decrypt_secure_messaging(uint8_t* encrypted_data, size_t encrypted_len, uint
     return 1;
 }
 
+void compute_retail_mac(const unsigned char *key, const unsigned char *input, size_t input_len, unsigned char *mac) {
+    mbedtls_des_context des_ctx;
+    mbedtls_des3_context des3_ctx;
+    unsigned char iv[8] = {0};    // Initial IV of zeros
+    unsigned char tmp[8] = {0};   // Temporary buffer for calculations
+
+    // Initialize contexts
+    mbedtls_des_init(&des_ctx);
+    mbedtls_des3_init(&des3_ctx);
+
+    // Split the 16-byte key into K1 (first 8 bytes) and K2 (last 8 bytes)
+    const unsigned char *K1 = key;
+    const unsigned char *K2 = key + 8;
+
+    // Process all blocks except the last with single DES using K1
+    mbedtls_des_setkey_enc(&des_ctx, K1);
+
+    for(size_t i = 0; i < input_len/8 - 1; i++) {
+        // XOR with previous result (or IV for first block)
+        for(int j = 0; j < 8; j++) {
+            tmp[j] = iv[j] ^ input[i * 8 + j];
+        }
+
+        // DES encrypt with K1
+        mbedtls_des_crypt_ecb(&des_ctx, tmp, iv);
+    }
+
+    // Process last block specially (Retail-MAC specific)
+    // XOR last input block with previous result
+    for(int j = 0; j < 8; j++) {
+        tmp[j] = iv[j] ^ input[(input_len/8 - 1) * 8 + j];
+    }
+
+    // For last block: DES decrypt with K2, then DES encrypt with K1
+    mbedtls_des_setkey_dec(&des_ctx, K2);
+    mbedtls_des_crypt_ecb(&des_ctx, tmp, tmp);
+
+    mbedtls_des_setkey_enc(&des_ctx, K1);
+    mbedtls_des_crypt_ecb(&des_ctx, tmp, mac);
+
+    // Clean up
+    mbedtls_des_free(&des_ctx);
+    mbedtls_des3_free(&des3_ctx);
+
+}

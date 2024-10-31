@@ -96,9 +96,9 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-	const char* CIN_num = "OPI5GORE<";
-	const char* birth_date = "000920";     // Format YYMMDD
-	const char* expiry_date = "310913";    // Format YYMMDD
+	const char* CIN_num = "L898902C<3";
+	const char* birth_date = "6908061";     // Format YYMMDD
+	const char* expiry_date = "9406236";    // Format YYMMDD
   /* USER CODE END 2 */
 
   /* Infinite loop */

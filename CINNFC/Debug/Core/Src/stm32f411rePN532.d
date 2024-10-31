@@ -64,7 +64,9 @@ Core/Src/stm32f411rePN532.o: ../Core/Src/stm32f411rePN532.c \
  ../Core/Inc/psa/crypto_builtin_key_derivation.h \
  ../Core/Inc/psa/crypto_extra.h ../Core/Inc/psa/crypto_compat.h \
  ../Core/Inc/mbedtls/sha1.h ../Core/Inc/mbedtls/cipher.h \
- ../Core/Inc/mbedtls/cmac.h
+ ../Core/Inc/mbedtls/cmac.h ../Core/Inc/mbedtls/entropy.h \
+ ../Core/Inc/mbedtls/md.h ../Core/Inc/mbedtls/ctr_drbg.h \
+ ../Core/Inc/mbedtls/aes.h ../Core/Inc/mbedtls/entropy.h
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -154,3 +156,8 @@ Core/Src/stm32f411rePN532.o: ../Core/Src/stm32f411rePN532.c \
 ../Core/Inc/mbedtls/sha1.h:
 ../Core/Inc/mbedtls/cipher.h:
 ../Core/Inc/mbedtls/cmac.h:
+../Core/Inc/mbedtls/entropy.h:
+../Core/Inc/mbedtls/md.h:
+../Core/Inc/mbedtls/ctr_drbg.h:
+../Core/Inc/mbedtls/aes.h:
+../Core/Inc/mbedtls/entropy.h:

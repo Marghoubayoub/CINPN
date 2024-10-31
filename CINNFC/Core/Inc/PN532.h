@@ -9,6 +9,8 @@
 #include "mbedtls/sha1.h"
 #include "mbedtls/cipher.h"
 #include "mbedtls/cmac.h"
+#include "mbedtls/entropy.h"
+#include "mbedtls/ctr_drbg.h"
 
 
 #include <stdint.h>
