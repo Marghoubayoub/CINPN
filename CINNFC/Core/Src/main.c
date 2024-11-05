@@ -105,6 +105,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   printf("Start \n");
 
+  uint8_t x, y;
+  calculate_mac(&x, 1, &y, 1);
+  return 0;
+
   PN532_I2C_Init(&pn532);
   PN532_GetFirmwareVersion(&pn532, buff);
   if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK) {

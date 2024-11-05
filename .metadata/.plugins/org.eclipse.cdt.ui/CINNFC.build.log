@@ -1,45 +1,10 @@
-16:00:05 **** Incremental Build of configuration Debug for project CINNFC ****
+17:42:11 **** Incremental Build of configuration Debug for project CINNFC ****
 make -j4 all 
-arm-none-eabi-gcc "../Core/Src/PN532.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc/mbedtls -I../Core/Inc/psa -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/PN532.d" -MT"Core/Src/PN532.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/PN532.o"
-../Core/Src/PN532.c:39: warning: "PN532_I2C_ADDRESS" redefined
-   39 | #define PN532_I2C_ADDRESS               0x48
-      | 
-In file included from ../Core/Src/PN532.c:30:
-../Core/Inc/PN532.h:68: note: this is the location of the previous definition
-   68 | #define PN532_I2C_ADDRESS                   (0x48 >> 1)
-      | 
-../Core/Src/PN532.c:40: warning: "HAL_MAX_DELAY" redefined
-   40 | #define HAL_MAX_DELAY                   10
-      | 
-In file included from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
-                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
-                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
-                 from ../Core/Inc/main.h:30,
-                 from ../Core/Inc/PN532.h:5,
-                 from ../Core/Src/PN532.c:30:
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:61: note: this is the location of the previous definition
-   61 | #define HAL_MAX_DELAY      0xFFFFFFFFU
-      | 
-../Core/Src/PN532.c: In function 'CIN_data':
-../Core/Src/PN532.c:643:10: warning: implicit declaration of function 'apply_secure_messaging' [-Wimplicit-function-declaration]
-  643 |     if (!apply_secure_messaging(cmd, sizeof(cmd), protected_cmd, &protected_len)) {
-      |          ^~~~~~~~~~~~~~~~~~~~~~
-../Core/Src/PN532.c:652:10: warning: implicit declaration of function 'decrypt_secure_messaging' [-Wimplicit-function-declaration]
-  652 |     if (!decrypt_secure_messaging(response, 128, data_buffer, data_length)) {
-      |          ^~~~~~~~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "CINNFC.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\MARGHOUB Ayoub\STM32CubeIDE\CINPN532\CINNFC\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CINNFC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.14.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235/tools/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
-(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
-Finished building target: CINNFC.elf
- 
 arm-none-eabi-size  CINNFC.elf 
-arm-none-eabi-objdump -h -S CINNFC.elf  > "CINNFC.list"
    text	   data	    bss	    dec	    hex	filename
-  80332	    180	  10884	  91396	  16504	CINNFC.elf
+  62140	    180	  10812	  73132	  11dac	CINNFC.elf
 Finished building: default.size.stdout
  
-Finished building: CINNFC.list
- 
 
-16:00:09 Build Finished. 0 errors, 5 warnings. (took 3s.726ms)
+17:42:12 Build Finished. 0 errors, 0 warnings. (took 1s.371ms)
 
